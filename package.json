@@ -1,0 +1,47 @@
+{
+  "name": "audience-blueprint",
+  "version": "0.1.0",
+  "description": "Evidence-grounded audience segmentation copilot toolkit for Dify and CDP teams.",
+  "type": "module",
+  "bin": {
+    "audience-blueprint": "./bin/audience-blueprint.js"
+  },
+  "scripts": {
+    "build:demo": "node ./bin/audience-blueprint.js build ./examples/retail-demo/catalog.json --out ./knowledge/tags --force",
+    "validate:demo": "node ./bin/audience-blueprint.js validate ./examples/retail-demo/catalog.json",
+    "test": "node --test",
+    "check": "npm run validate:demo && npm test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "dify",
+    "cdp",
+    "audience-segmentation",
+    "marketing",
+    "agent",
+    "knowledge-base"
+  ],
+  "license": "Apache-2.0",
+  "files": [
+    "bin/",
+    "src/",
+    "schemas/",
+    "workflow/",
+    "knowledge/",
+    "examples/",
+    "evals/",
+    "docs/",
+    "README.md",
+    "README.zh-CN.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "SECURITY.md",
+    "CODE_OF_CONDUCT.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "yaml": "^2.9.0"
+  }
+}

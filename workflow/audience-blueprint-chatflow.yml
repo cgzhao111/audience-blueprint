@@ -1,0 +1,1510 @@
+app:
+  description: 'Audience Blueprint 通用演示工作流：将营销目标转换为有证据约束、可人工复核的 CDP 人群配置建议。内置数据均为合成示例；不计算人数，不自动建群，不自动触达。'
+  icon: female-judge
+  icon_background: '#E0EAFF'
+  icon_type: emoji
+  mode: advanced-chat
+  name: Audience Blueprint Demo
+  use_icon_as_answer_icon: true
+dependencies: []
+kind: app
+version: 0.6.0
+workflow:
+  conversation_variables:
+  - description: 已确认的活动背景槽位 JSON，不保存用户原始输入
+    id: 3f22b784-3173-4b4f-85db-9d9582874201
+    name: activity_context
+    selector:
+    - conversation
+    - activity_context
+    value: '{}'
+    value_type: string
+  - description: 上一次已校验圈人方案 JSON，用于扩大、收窄、修改排除等多轮调整
+    id: 46b85ad3-bd85-4b73-96dc-a04296a6394c
+    name: last_plan
+    selector:
+    - conversation
+    - last_plan
+    value: '{}'
+    value_type: string
+  - description: 上一次结果状态
+    id: 42d1558b-3b99-4f04-96bb-d603af916a8a
+    name: last_status
+    selector:
+    - conversation
+    - last_status
+    value: ''
+    value_type: string
+  - description: 本次召回标签记录中的知识版本
+    id: 35b89569-f6a2-43bd-9292-fe62663987ca
+    name: knowledge_version
+    selector:
+    - conversation
+    - knowledge_version
+    value: ''
+    value_type: string
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 20
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: '你好，我是营销圈人配置顾问。请告诉我活动场景、营销目标、区域、活动时间和触达渠道，我会基于现有 CDP 标签资料给出核心、潜力和扩展人群的配置建议。\n\n一期仅提供人工配置建议，不计算人数、不自动建群、不自动触达。'
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions:
+    - 深圳新店下月开业，目标是到店转化，短信触达
+    - 召回近半年未消费会员，活动持续两周，企微触达
+    - 注册未消费用户首单转化，全国范围，短信触达
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 2000000000001-source-2000000000019-target
+      source: '2000000000001'
+      sourceHandle: source
+      target: '2000000000019'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: if-else
+      id: 2000000000019-source-2000000000020-target
+      source: '2000000000019'
+      sourceHandle: source
+      target: '2000000000020'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 2000000000020-pii-2000000000006-target
+      source: '2000000000020'
+      sourceHandle: pii
+      target: '2000000000006'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 2000000000020-false-2000000000002-target
+      source: '2000000000020'
+      sourceHandle: 'false'
+      target: '2000000000002'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 2000000000002-source-2000000000003-target
+      source: '2000000000002'
+      sourceHandle: source
+      target: '2000000000003'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 2000000000003-source-2000000000004-target
+      source: '2000000000003'
+      sourceHandle: source
+      target: '2000000000004'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: if-else
+      id: 2000000000004-source-2000000000005-target
+      source: '2000000000004'
+      sourceHandle: source
+      target: '2000000000005'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 2000000000005-pii-2000000000006-target
+      source: '2000000000005'
+      sourceHandle: pii
+      target: '2000000000006'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 2000000000005-other-2000000000007-target
+      source: '2000000000005'
+      sourceHandle: other
+      target: '2000000000007'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 2000000000005-missing-2000000000008-target
+      source: '2000000000005'
+      sourceHandle: missing
+      target: '2000000000008'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: knowledge-retrieval
+      id: 2000000000005-false-2000000000009-target
+      source: '2000000000005'
+      sourceHandle: 'false'
+      target: '2000000000009'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: code
+      id: 2000000000009-source-2000000000018-target
+      source: '2000000000009'
+      sourceHandle: source
+      target: '2000000000018'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: knowledge-retrieval
+      id: 2000000000018-source-2000000000010-target
+      source: '2000000000018'
+      sourceHandle: source
+      target: '2000000000010'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 2000000000010-source-2000000000011-target
+      source: '2000000000010'
+      sourceHandle: source
+      target: '2000000000011'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 2000000000011-source-2000000000012-target
+      source: '2000000000011'
+      sourceHandle: source
+      target: '2000000000012'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: assigner
+      id: 2000000000012-source-2000000000013-target
+      source: '2000000000012'
+      sourceHandle: source
+      target: '2000000000013'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: assigner
+        targetType: if-else
+      id: 2000000000013-source-2000000000014-target
+      source: '2000000000013'
+      sourceHandle: source
+      target: '2000000000014'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 2000000000014-ready-2000000000015-target
+      source: '2000000000014'
+      sourceHandle: ready
+      target: '2000000000015'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 2000000000014-pending-2000000000016-target
+      source: '2000000000014'
+      sourceHandle: pending
+      target: '2000000000016'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: if-else
+        targetType: answer
+      id: 2000000000014-false-2000000000017-target
+      source: '2000000000014'
+      sourceHandle: 'false'
+      target: '2000000000017'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: 对话入口
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 73
+      id: '2000000000001'
+      position: {x: -1600, y: 100}
+      positionAbsolute: {x: -1600, y: 100}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: |
+          import re
+
+          PATTERNS = (
+              r"(?<!\d)1[3-9]\d{9}(?!\d)",
+              r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}",
+              r"(?<!\d)[1-9]\d{5}(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])\d{3}[\dXx](?!\d)",
+              r"(?i)(?:会员号|会员编号|会员\s*ID|member[_\s-]*id|open[_\s-]*id|openid|unionid)\s*[:：=]?\s*[A-Za-z0-9_-]{4,}",
+          )
+
+          def main(user_query):
+              text = str(user_query or "")
+              blocked = any(re.search(pattern, text) for pattern in PATTERNS)
+              return {
+                  "safe_gate": "PII_BLOCKED" if blocked else "CLEAR",
+                  "safe_notice": "请删除手机号、邮箱、证件号、会员号、会员ID、openid等用户标识后，再描述营销目标。" if blocked else "",
+              }
+        code_language: python3
+        desc: 在任何模型调用前检查手机号、邮箱、身份证和显式用户标识；不输出或保存原始输入
+        outputs:
+          safe_gate: {children: null, type: string}
+          safe_notice: {children: null, type: string}
+        selected: false
+        title: 输入安全预检
+        type: code
+        variables:
+        - value_selector: [sys, query]
+          value_type: string
+          variable: user_query
+      height: 96
+      id: '2000000000019'
+      position: {x: -1320, y: -140}
+      positionAbsolute: {x: -1320, y: -140}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: pii
+          conditions:
+          - comparison_operator: is
+            id: 33938836-ec42-48c0-a35c-d47b10782a66
+            value: PII_BLOCKED
+            varType: string
+            variable_selector: ['2000000000019', safe_gate]
+          id: pii
+          logical_operator: and
+        desc: 命中用户标识时直接拒绝，未命中才允许进入意图模型
+        selected: false
+        title: 模型调用前安全分流
+        type: if-else
+      height: 148
+      id: '2000000000020'
+      position: {x: -990, y: -140}
+      positionAbsolute: {x: -990, y: -140}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 识别新建、修改、解释或其他意图，并提取活动槽位
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix: {assistant: '', user: ''}
+          window: {enabled: false, size: 20}
+        model:
+          completion_params:
+            response_format: json_object
+            temperature: 0.2
+          mode: chat
+          name: gpt-4.1-mini
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 993b2f1d-0508-4a44-8071-06cd2e5183a8
+          role: system
+          text: |
+            你是营销圈人配置顾问的意图与槽位提取器，只负责理解，不负责生成标签。
+
+            intent 只能是：
+            - NEW_PLAN：新建圈人方案
+            - MODIFY_PLAN：扩大、收窄、调整条件、修改排除或修改时间窗
+            - EXPLAIN：解释上一方案或某个配置条件
+            - OTHER：与营销圈人配置无关
+
+            slots 只允许包含：scenario、goal、region、activity_start、activity_end、channel、benefit、brand、store、audience_count。
+            没有明确提供的字段使用空字符串，不得猜测。audience_count 只能为 1 到 4；用户没有明确提出人群组数/层数时必须为空字符串。
+            不要在 slots 中保存手机号、邮箱、证件号、会员号或用户明细。
+
+            严格输出 JSON，不要输出解释：
+            {"intent":"NEW_PLAN|MODIFY_PLAN|EXPLAIN|OTHER","slots":{"scenario":"","goal":"","region":"","activity_start":"","activity_end":"","channel":"","benefit":"","brand":"","store":"","audience_count":""},"modification":""}
+        - id: 75559a20-5004-4ca8-b5bf-2ffc8b006c2e
+          role: user
+          text: |
+            上一次活动背景：{{#conversation.activity_context#}}
+            上一次已校验方案：{{#conversation.last_plan#}}
+            用户本轮输入：{{#sys.query#}}
+        selected: false
+        structured_output_enabled: false
+        title: 营销意图与活动槽位提取
+        type: llm
+        variables: []
+        vision: {enabled: false}
+      height: 132
+      id: '2000000000002'
+      position: {x: -1270, y: 100}
+      positionAbsolute: {x: -1270, y: 100}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: |
+          import json
+          import re
+          from datetime import date
+
+          SLOT_KEYS = (
+              "scenario", "goal", "region", "activity_start", "activity_end",
+              "channel", "benefit", "brand", "store", "audience_count"
+          )
+          REQUIRED = ("scenario", "goal", "region", "activity_start", "activity_end", "channel", "benefit")
+          INTENTS = {"NEW_PLAN", "MODIFY_PLAN", "EXPLAIN", "OTHER"}
+
+          def load_object(value):
+              if isinstance(value, dict):
+                  return value
+              if not isinstance(value, str) or not value.strip():
+                  return {}
+              text = value.strip()
+              if text.startswith("```"):
+                  text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text, flags=re.I)
+              try:
+                  parsed = json.loads(text)
+                  return parsed if isinstance(parsed, dict) else {}
+              except Exception:
+                  return {}
+
+          def has_pii(text):
+              value = str(text or "")
+              patterns = (
+                  r"(?<!\d)1[3-9]\d{9}(?!\d)",
+                  r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}",
+                  r"(?<!\d)[1-9]\d{5}(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])\d{3}[\dXx](?!\d)",
+                  r"(?i)(?:会员号|会员编号|会员\s*ID|member[_\s-]*id|open[_\s-]*id|openid|unionid)\s*[:：=]?\s*[A-Za-z0-9_-]{4,}",
+              )
+              return any(re.search(pattern, value) for pattern in patterns)
+
+          def clean_text(value, limit=200):
+              if value is None:
+                  return ""
+              text = re.sub(r"[\x00-\x1f\x7f]", " ", str(value)).strip()
+              return text[:limit]
+
+          def main(llm_output, previous_context, previous_plan, user_query):
+              previous = load_object(previous_context)
+              parsed = load_object(llm_output)
+              intent = str(parsed.get("intent") or "OTHER").upper()
+              if intent not in INTENTS:
+                  intent = "OTHER"
+
+              if has_pii(user_query):
+                  return {
+                      "gate": "PII_BLOCKED",
+                      "intent": intent,
+                      "context_json": json.dumps(previous, ensure_ascii=False),
+                      "missing_fields": "",
+                      "followup": "请删除手机号、邮箱、证件号、会员号或用户明细后，再描述营销目标。",
+                      "knowledge_query": "",
+                      "previous_plan": str(previous_plan or "{}"),
+                  }
+
+              incoming = parsed.get("slots") if isinstance(parsed.get("slots"), dict) else {}
+              merged = {} if intent == "NEW_PLAN" else {
+                  key: previous.get(key, "") for key in SLOT_KEYS
+              }
+              for key in SLOT_KEYS:
+                  value = incoming.get(key)
+                  if value not in (None, ""):
+                      if key == "audience_count":
+                          try:
+                              merged[key] = max(1, min(4, int(value)))
+                          except Exception:
+                              merged[key] = 3
+                      else:
+                          merged[key] = clean_text(value)
+              if intent == "NEW_PLAN" and not merged.get("audience_count"):
+                  merged["audience_count"] = 3
+
+              required = list(REQUIRED)
+              scenario = clean_text(merged.get("scenario"))
+              if scenario.upper() == "BRAND_PROMOTION" or any(keyword in scenario for keyword in ("品牌促销", "品牌活动", "品牌营销")):
+                  required.append("brand")
+              if scenario.upper() == "STORE_OPENING" or any(keyword in scenario for keyword in ("门店开业", "新店开业", "开业引流")):
+                  required.append("store")
+              missing = [key for key in required if not clean_text(merged.get(key))]
+              date_issue = ""
+              start_text = clean_text(merged.get("activity_start"))
+              end_text = clean_text(merged.get("activity_end"))
+              if re.fullmatch(r"\d{4}-\d{2}-\d{2}", start_text) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", end_text):
+                  try:
+                      if date.fromisoformat(start_text) > date.fromisoformat(end_text):
+                          date_issue = "活动结束日期不得早于开始日期"
+                  except ValueError:
+                      date_issue = "活动起止日期不是有效日历日期"
+              if date_issue:
+                  missing.append("activity_date_order")
+              if intent == "OTHER":
+                  gate = "OTHER"
+              elif missing:
+                  gate = "MISSING_REQUIRED"
+              else:
+                  gate = "READY_FOR_RETRIEVAL"
+
+              labels = {
+                  "scenario": "活动场景", "goal": "营销目标", "region": "区域",
+                  "activity_start": "开始时间", "activity_end": "结束时间", "channel": "触达渠道",
+                  "benefit": "核心利益点/权益", "brand": "活动品牌", "store": "目标门店名称或店号",
+                  "activity_date_order": date_issue or "有效的活动起止日期"
+              }
+              followup = "请一次性补充：" + "、".join(labels[key] for key in missing) if missing else ""
+              query_parts = [clean_text(merged.get(key)) for key in SLOT_KEYS if clean_text(merged.get(key))]
+              modification = clean_text(parsed.get("modification"), 300)
+              if modification:
+                  query_parts.append(modification)
+
+              return {
+                  "gate": gate,
+                  "intent": intent,
+                  "context_json": json.dumps(merged, ensure_ascii=False),
+                  "missing_fields": ",".join(missing),
+                  "followup": followup,
+                  "knowledge_query": " ".join(query_parts)[:1000],
+                  "previous_plan": "{}" if intent == "NEW_PLAN" else str(previous_plan or "{}"),
+              }
+        code_language: python3
+        desc: 解析模型 JSON，合并多轮上下文，拦截个人信息并集中生成缺失项追问
+        outputs:
+          context_json: {children: null, type: string}
+          followup: {children: null, type: string}
+          gate: {children: null, type: string}
+          intent: {children: null, type: string}
+          knowledge_query: {children: null, type: string}
+          missing_fields: {children: null, type: string}
+          previous_plan: {children: null, type: string}
+        selected: false
+        title: 解析并合并活动上下文
+        type: code
+        variables:
+        - value_selector: ['2000000000002', text]
+          value_type: string
+          variable: llm_output
+        - value_selector: [conversation, activity_context]
+          value_type: string
+          variable: previous_context
+        - value_selector: [conversation, last_plan]
+          value_type: string
+          variable: previous_plan
+        - value_selector: [sys, query]
+          value_type: string
+          variable: user_query
+      height: 96
+      id: '2000000000003'
+      position: {x: -940, y: 100}
+      positionAbsolute: {x: -940, y: 100}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: 只保存清洗后的活动背景，不保存用户原始输入
+        items:
+        - input_type: variable
+          operation: over-write
+          value: ['2000000000003', context_json]
+          variable_selector: [conversation, activity_context]
+          write_mode: over-write
+        selected: false
+        title: 保存活动背景
+        type: assigner
+        version: '2'
+      height: 84
+      id: '2000000000004'
+      position: {x: -610, y: 100}
+      positionAbsolute: {x: -610, y: 100}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: pii
+          conditions:
+          - comparison_operator: is
+            id: c67a284e-c461-46c5-a0d2-d6b42a071a46
+            value: PII_BLOCKED
+            varType: string
+            variable_selector: ['2000000000003', gate]
+          id: pii
+          logical_operator: and
+        - case_id: other
+          conditions:
+          - comparison_operator: is
+            id: bb99eb07-e776-4fb6-ac42-4e773d80f4cb
+            value: OTHER
+            varType: string
+            variable_selector: ['2000000000003', gate]
+          id: other
+          logical_operator: and
+        - case_id: missing
+          conditions:
+          - comparison_operator: is
+            id: 9b603a9b-3afd-4136-bd00-a985ab5fc297
+            value: MISSING_REQUIRED
+            varType: string
+            variable_selector: ['2000000000003', gate]
+          id: missing
+          logical_operator: and
+        desc: 个人信息、非圈人意图和缺失信息提前结束；其余进入知识检索
+        selected: false
+        title: 输入完整性与安全分流
+        type: if-else
+      height: 300
+      id: '2000000000005'
+      position: {x: -280, y: 100}
+      positionAbsolute: {x: -280, y: 100}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '检测到手机号、邮箱、证件号、会员号、会员ID、openid或其他用户标识。请删除这些内容后，只描述活动条件和营销目标。\n\n本智能体不接收用户明细。'
+        desc: ''
+        selected: false
+        title: 回复：拒绝个人信息
+        type: answer
+        variables: []
+      height: 103
+      id: '2000000000006'
+      position: {x: 50, y: -260}
+      positionAbsolute: {x: 50, y: -260}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '我是营销圈人配置顾问，目前支持根据活动场景、目标、区域、时间和渠道推荐 CDP 圈选配置。请描述一次营销活动，例如“深圳新店开业，下月活动，短信触达，目标到店转化”。'
+        desc: ''
+        selected: false
+        title: 回复：非圈人意图
+        type: answer
+        variables: []
+      height: 120
+      id: '2000000000007'
+      position: {x: 50, y: -80}
+      positionAbsolute: {x: 50, y: -80}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#2000000000003.followup#}}\n\n示例：深圳新店下月开业，目标是到店转化，短信触达。'
+        desc: ''
+        selected: false
+        title: 回复：集中追问缺失信息
+        type: answer
+        variables: []
+      height: 103
+      id: '2000000000008'
+      position: {x: 50, y: 100}
+      positionAbsolute: {x: 50, y: 100}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: |
+          import json
+          import re
+
+          CODE_KEYWORDS = {
+              "BRAND_PROMOTION": ("品牌促销", "品牌活动", "品牌营销", "促销活动"),
+              "DORMANT_RECALL": ("休眠召回", "休眠会员", "沉睡会员", "会员召回"),
+              "REGISTERED_NO_PURCHASE": ("注册未消费", "注册未购买", "首单转化", "新客转化"),
+              "STORE_OPENING": ("门店开业", "新店开业", "开业引流"),
+          }
+
+          def flatten_text(value):
+              if value is None:
+                  return ""
+              if isinstance(value, str):
+                  return value
+              if isinstance(value, dict):
+                  preferred = []
+                  for key in ("document_name", "title", "name", "content", "text"):
+                      if key in value:
+                          preferred.append(flatten_text(value.get(key)))
+                  if preferred:
+                      return "\n".join(preferred)
+                  return "\n".join(flatten_text(item) for item in value.values())
+              if isinstance(value, (list, tuple)):
+                  return "\n".join(flatten_text(item) for item in value)
+              return str(value)
+
+          def documents(value):
+              if isinstance(value, list):
+                  return [flatten_text(item) for item in value if flatten_text(item).strip()]
+              return [flatten_text(value)] if flatten_text(value).strip() else []
+
+          def context_scenario(value):
+              try:
+                  parsed = json.loads(value) if isinstance(value, str) else value
+              except Exception:
+                  parsed = {}
+              scenario = str((parsed or {}).get("scenario") or "").strip()
+              upper = scenario.upper()
+              if upper in CODE_KEYWORDS:
+                  return upper
+              for code, keywords in CODE_KEYWORDS.items():
+                  if any(keyword in scenario for keyword in keywords):
+                      return code
+              return ""
+
+          def detect_code(text):
+              match = re.search(r"场景代码\s*[:：]\s*`?([A-Z_]+)`?", text, flags=re.I)
+              if match:
+                  return match.group(1).upper()
+              hints = {
+                  "COMMON": ("00通用规则", "通用规则"),
+                  "BRAND_PROMOTION": ("01品牌促销", "品牌促销"),
+                  "DORMANT_RECALL": ("02休眠召回", "休眠召回"),
+                  "REGISTERED_NO_PURCHASE": ("03注册未消费", "注册未消费"),
+                  "STORE_OPENING": ("04门店开业", "门店开业"),
+              }
+              for code, keywords in hints.items():
+                  if any(keyword in text for keyword in keywords):
+                      return code
+              return ""
+
+          def split_by_scene(text):
+              markers = list(re.finditer(r"场景代码\s*[:：]\s*`?([A-Z_]+)`?", text, flags=re.I))
+              if len(markers) <= 1:
+                  return [(detect_code(text), text)]
+              result = []
+              for index, marker in enumerate(markers):
+                  start = marker.start()
+                  end = markers[index + 1].start() if index + 1 < len(markers) else len(text)
+                  result.append((marker.group(1).upper(), text[start:end]))
+              return result
+
+          def allowed_section(text):
+              match = re.search(r"(?is)##\s*允许引用的标签\s*(.*?)(?=\n##\s|\Z)", text)
+              return match.group(1).strip() if match else ""
+
+          def extract_cf_ids(text):
+              ids = set(re.findall(r"\bCF-\d{3}\b", text.upper()))
+              ranges = re.findall(r"CF-(\d{3})\s*(?:至|到|~|～|—|–)\s*CF-(\d{3})", text.upper())
+              for start, end in ranges:
+                  first, last = int(start), int(end)
+                  if 1 <= first <= last <= 999 and last - first <= 100:
+                      ids.update("CF-" + str(number).zfill(3) for number in range(first, last + 1))
+              return ids
+
+          def main(strategy_hits, activity_context):
+              target_code = context_scenario(activity_context)
+              sections = []
+              for document in documents(strategy_hits):
+                  sections.extend(split_by_scene(document))
+
+              target_parts = [text for code, text in sections if code == target_code]
+              common_parts = [text for code, text in sections if code == "COMMON"]
+              if not target_code:
+                  notice = "活动场景无法映射到已支持策略代码"
+                  selected = []
+              elif not target_parts:
+                  notice = "本轮未召回与 " + target_code + " 对应的完整策略片段"
+                  selected = []
+              else:
+                  notice = ""
+                  selected = common_parts + target_parts
+
+              allowed = set()
+              for text in selected:
+                  section = allowed_section(text)
+                  if section:
+                      allowed.update(extract_cf_ids(section))
+              ordered = sorted(allowed, key=lambda item: int(item.split("-")[1]))
+              if not ordered and not notice:
+                  notice = "已召回策略，但未找到完整的‘允许引用的标签’段落"
+
+              review_values = []
+              versions = set()
+              for text in selected:
+                  review_match = re.search(r"审核状态\s*[:：]\s*([^\n]+)", text, flags=re.I)
+                  if review_match:
+                      review_values.append(review_match.group(1).strip(" `>"))
+                  version_match = re.search(r"知识版本\s*[:：]\s*`?([^`\s]+)`?", text, flags=re.I)
+                  if version_match:
+                      versions.add(version_match.group(1).strip())
+              approved_review_values = {"APPROVED", "已审批", "审核通过"}
+              strategy_review_status = "APPROVED" if review_values and all(
+                  (value.upper() if re.fullmatch(r"[A-Za-z_]+", value) else value) in approved_review_values
+                  for value in review_values
+              ) else "NEEDS_CONFIRMATION"
+
+              return {
+                  "strategy_status": "READY" if ordered else "UNSUPPORTED",
+                  "scenario_code": target_code,
+                  "allowed_cf_ids": ",".join(ordered),
+                  "tag_query": " ".join(ordered) if ordered else "__NO_SUPPORTED_CF__",
+                  "selected_strategy_text": "\n\n".join(selected)[:12000],
+                  "strategy_notice": notice,
+                  "strategy_review_status": strategy_review_status,
+                  "strategy_version": ",".join(sorted(versions)),
+              }
+        code_language: python3
+        desc: 按明确活动场景选择目标策略与通用策略，只展开“允许引用的标签”段落并生成精确标签查询词
+        outputs:
+          allowed_cf_ids: {children: null, type: string}
+          scenario_code: {children: null, type: string}
+          selected_strategy_text: {children: null, type: string}
+          strategy_notice: {children: null, type: string}
+          strategy_review_status: {children: null, type: string}
+          strategy_status: {children: null, type: string}
+          strategy_version: {children: null, type: string}
+          tag_query: {children: null, type: string}
+        selected: false
+        title: 策略约束与标签查询词
+        type: code
+        variables:
+        - value_selector: ['2000000000009', result]
+          value_type: array[object]
+          variable: strategy_hits
+        - value_selector: [conversation, activity_context]
+          value_type: string
+          variable: activity_context
+      height: 96
+      id: '2000000000018'
+      position: {x: 380, y: 300}
+      positionAbsolute: {x: 380, y: 300}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids: []
+        desc: 导入后必须在 Dify 页面绑定“业务策略知识库”；当前不伪造知识库 ID
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          reranking_model:
+            model: ''
+            provider: ''
+          score_threshold: 0.45
+          top_k: 5
+        query_variable_selector: ['2000000000003', knowledge_query]
+        retrieval_mode: multiple
+        selected: false
+        title: 业务策略知识检索（导入后绑定）
+        type: knowledge-retrieval
+      height: 90
+      id: '2000000000009'
+      position: {x: 50, y: 300}
+      positionAbsolute: {x: 50, y: 300}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        dataset_ids: []
+        desc: 导入后必须在 Dify 页面绑定“CDP标签配置知识库”；当前不伪造知识库 ID
+        multiple_retrieval_config:
+          reranking_enable: false
+          reranking_mode: reranking_model
+          reranking_model:
+            model: ''
+            provider: ''
+          score_threshold: 0.45
+          top_k: 12
+        query_variable_selector: ['2000000000018', tag_query]
+        retrieval_mode: multiple
+        selected: false
+        title: CDP标签配置知识检索（导入后绑定）
+        type: knowledge-retrieval
+      height: 90
+      id: '2000000000010'
+      position: {x: 710, y: 300}
+      positionAbsolute: {x: 710, y: 300}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: 只从两份召回内容选择策略和标签，输出待校验 JSON
+        model:
+          completion_params:
+            response_format: json_object
+            temperature: 0.2
+          mode: chat
+          name: gpt-4.1-mini
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 0eefcd80-c86c-4ce4-84c1-f0565d8fb178
+          role: system
+          text: |
+            你是 CDP 圈人配置方案生成器。只能使用“业务策略召回”允许且“标签配置召回”完整 TAG_RECORD 中存在的 record_id（CF-ID），不得创造、改写或猜测 CF-ID、标签名称、路径、操作符和值。
+
+            业务策略召回只用于选择分层方法；标签是否真实、状态和配置方式以标签配置召回为准。
+            找不到支持某个概念的 CF-ID 时，将概念写入 capability_gaps，不要放入 conditions。
+            如果标签记录没有已核验的操作符或枚举元数据，只能使用人可读配置值并标记为待 CDP 页面确认，绝不能创造枚举编码、字段编码或宣称可直接配置。
+            默认输出核心、潜力、扩展三组，可根据 activity_context 中的 audience_count 输出 1 到 4 组。
+            每组需包含业务定位、理由、满足/排除条件以及 AND/OR 关系。不得给出实际人数，不得声称已经建群或触达。
+
+            严格输出 JSON：
+            {
+              "summary":"需求理解",
+              "audiences":[{
+                "name":"核心人群",
+                "positioning":"业务定位",
+                "reason":"推荐理由",
+                "conditions":[{
+                  "cf_id":"CF-001",
+                  "logic":"AND|OR",
+                  "use":"include|exclude",
+                  "operator":"知识记录允许的操作符",
+                  "value":"配置值",
+                  "time_window":"时间窗口，没有则为空",
+                  "aggregation":"聚合方式，没有则为空",
+                  "reason":"选择原因"
+                }]
+              }],
+              "capability_gaps":["没有标签支持的业务概念"],
+              "notes":["业务注意事项"]
+            }
+        - id: 58409ea1-1944-4200-bc8a-5bcc1e03e45a
+          role: user
+          text: |
+            activity_context：{{#conversation.activity_context#}}
+            last_plan：{{#2000000000003.previous_plan#}}
+            本轮意图：{{#2000000000003.intent#}}
+            用户本轮输入：{{#sys.query#}}
+
+            业务策略召回：
+            {{#2000000000018.selected_strategy_text#}}
+
+            策略允许 CF-ID：{{#2000000000018.allowed_cf_ids#}}
+            策略解析提示：{{#2000000000018.strategy_notice#}}
+
+            标签配置召回：
+            {{#2000000000010.result#}}
+        selected: false
+        structured_output_enabled: false
+        title: 基于召回内容生成结构化圈人方案
+        type: llm
+        variables: []
+        vision: {enabled: false}
+      height: 132
+      id: '2000000000011'
+      position: {x: 1040, y: 300}
+      positionAbsolute: {x: 1040, y: 300}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        code: |
+          import json
+          import re
+
+          CONFIRMED_VALUES = {"CONFIRMED", "CONFIRMED_CONFIGURABLE", "已确认可配置"}
+          PENDING_VALUES = {"PENDING", "NEEDS_CONFIRMATION", "配置前请确认"}
+
+          def flatten_text(value):
+              if value is None:
+                  return ""
+              if isinstance(value, str):
+                  return value
+              if isinstance(value, dict):
+                  return "\n".join(flatten_text(item) for item in value.values())
+              if isinstance(value, (list, tuple)):
+                  return "\n".join(flatten_text(item) for item in value)
+              return str(value)
+
+          def field(block, name):
+              match = re.search(r"(?im)^\s*" + re.escape(name) + r"\s*[:：]\s*(.*?)\s*$", block)
+              return match.group(1).strip() if match else ""
+
+          def field_exact(block, name):
+              match = re.search(r"(?m)^\s*" + re.escape(name) + r"\s*[:：]\s*(.*?)\s*$", block)
+              return match.group(1).strip() if match else ""
+
+          def field_compat(block, lowercase_name, uppercase_name):
+              return field_exact(block, lowercase_name) or field_exact(block, uppercase_name) or field(block, lowercase_name)
+
+          def split_values(value):
+              return [item.strip() for item in re.split(r"[,，、|]", value or "") if item.strip()]
+
+          def parse_catalog(tag_hits):
+              text = flatten_text(tag_hits)
+              blocks = re.findall(r"TAG_RECORD_BEGIN(.*?)TAG_RECORD_END", text, flags=re.I | re.S)
+              records = {}
+              for block in blocks:
+                  cf_id = (field(block, "record_id") or field(block, "CF_ID")).upper()
+                  if not re.fullmatch(r"CF[A-Z0-9_-]+", cf_id):
+                      continue
+                  raw_status = field(block, "confirmation_status") or field(block, "STATUS")
+                  if raw_status in CONFIRMED_VALUES:
+                      status = "CONFIRMED"
+                  elif raw_status in PENDING_VALUES:
+                      status = "PENDING"
+                  else:
+                      status = "UNSUPPORTED"
+                  name = field(block, "display_name") or field(block, "TAG_NAME") or cf_id
+                  path_clue = field(block, "path_clue") or field(block, "PATH")
+                  verified_path = field_compat(block, "verified_path", "VERIFIED_PATH")
+                  path = verified_path or path_clue
+                  operators = split_values(field_compat(block, "operators", "OPERATORS"))
+                  resource_type_hint = field(block, "resource_type_hint") or field(block, "RESOURCE_TYPE")
+                  verified_resource_type = field_compat(block, "verified_resource_type", "VERIFIED_RESOURCE_TYPE")
+                  resource_type = verified_resource_type or resource_type_hint
+                  version = field_compat(block, "version", "VERSION")
+                  source_clue = field(block, "source_knowledge") or field(block, "source_seed") or field(block, "SOURCE")
+                  verified_source = field_compat(block, "verified_source", "VERIFIED_SOURCE")
+                  source = verified_source or source_clue
+                  time_window_required_raw = field_compat(block, "time_window_required", "TIME_WINDOW_REQUIRED")
+                  aggregations = split_values(field_compat(block, "aggregations", "AGGREGATIONS"))
+                  required_metadata = {
+                      "VERIFIED_PATH": verified_path,
+                      "VERIFIED_RESOURCE_TYPE": verified_resource_type,
+                      "OPERATORS": operators,
+                      "VERIFIED_SOURCE": verified_source,
+                      "VERSION": version,
+                  }
+                  if resource_type.lower() in ("event", "event_property"):
+                      required_metadata["TIME_WINDOW_REQUIRED"] = time_window_required_raw
+                      required_metadata["AGGREGATIONS"] = aggregations
+                  missing_metadata = [key for key, value in required_metadata.items() if not value]
+                  if status == "CONFIRMED" and missing_metadata:
+                      status = "PENDING"
+                  records[cf_id] = {
+                      "cf_id": cf_id,
+                      "name": name,
+                      "path": path,
+                      "path_clue": path_clue,
+                      "verified_path": verified_path,
+                      "status": status,
+                      "operators": operators,
+                      "values": split_values(field_compat(block, "values", "VALUES")),
+                      "resource_type": resource_type,
+                      "resource_type_hint": resource_type_hint,
+                      "verified_resource_type": verified_resource_type,
+                      "version": version,
+                      "source": source,
+                      "source_clue": source_clue,
+                      "verified_source": verified_source,
+                      "missing_metadata": missing_metadata,
+                      "time_window_required": time_window_required_raw.lower() in ("true", "yes", "1", "是"),
+                      "aggregations": aggregations,
+                      "configuration_guidance": field(block, "configuration_guidance"),
+                  }
+              return records
+
+          def load_plan(value):
+              if isinstance(value, dict):
+                  return value
+              text = str(value or "").strip()
+              if text.startswith("```"):
+                  text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text, flags=re.I)
+              try:
+                  parsed = json.loads(text)
+                  return parsed if isinstance(parsed, dict) else {}
+              except Exception:
+                  return {}
+
+          def md(value, limit=500):
+              text = re.sub(r"[\x00-\x1f\x7f]", " ", str(value or "")).strip()[:limit]
+              for char in ("\\", "`", "*", "_", "[", "]", "<", ">", "#", "|"):
+                  text = text.replace(char, "\\" + char)
+              return text
+
+          def display_value(value):
+              if isinstance(value, (list, tuple)):
+                  return "、".join(md(item, 100) for item in value)
+              if isinstance(value, dict):
+                  return md(json.dumps(value, ensure_ascii=False), 300)
+              return md(value, 300)
+
+          def sanitize_claims(value, warnings, field_name):
+              text = str(value or "")
+              original = text
+              text = re.sub(r"(?:预计|预估|约)?\s*(?:覆盖)?\s*\d+(?:\.\d+)?\s*(?:万)?人", "[未计算人数]", text)
+              text = re.sub(r"已(?:创建人群|建群|触达|发送)", "尚未执行", text)
+              text = re.sub(r"(?i)(?:转化率|ROI)\s*[:：=]?\s*\d+(?:\.\d+)?%?", "[未核验效果指标]", text)
+              if text != original:
+                  warnings.append(field_name + "含未经计算或未经执行验证的声明，已替换")
+              return text
+
+          def main(plan_text, tag_hits, allowed_cf_ids, previous_plan, intent, strategy_review_status, strategy_version):
+              catalog = parse_catalog(tag_hits)
+              strategy_allowed = set(re.findall(r"\bCF-\d{3}\b", str(allowed_cf_ids or "").upper()))
+              plan = load_plan(plan_text)
+              raw_audiences = plan.get("audiences") if isinstance(plan.get("audiences"), list) else []
+              gaps = [str(item)[:300] for item in plan.get("capability_gaps", []) if str(item).strip()] if isinstance(plan.get("capability_gaps"), list) else []
+              normalized_audiences = []
+              confirmed_count = 0
+              pending_count = 0
+              safety_warnings = []
+
+              for audience in raw_audiences[:4]:
+                  if not isinstance(audience, dict):
+                      continue
+                  valid_conditions = []
+                  conditions = audience.get("conditions") if isinstance(audience.get("conditions"), list) else []
+                  for condition in conditions[:20]:
+                      if not isinstance(condition, dict):
+                          continue
+                      cf_id = str(condition.get("cf_id") or "").upper().strip()
+                      record = catalog.get(cf_id)
+                      if not record:
+                          if cf_id:
+                              gaps.append("未在本轮标签召回中找到 " + cf_id)
+                          continue
+                      if not strategy_allowed or cf_id not in strategy_allowed:
+                          gaps.append(cf_id + " 未进入本轮策略召回的允许清单")
+                          continue
+                      if record["status"] == "UNSUPPORTED":
+                          gaps.append(record["name"] + " 当前资料不支持")
+                          continue
+                      operator = str(condition.get("operator") or "").strip()
+                      if record["operators"] and operator not in record["operators"]:
+                          gaps.append(record["name"] + " 的操作符“" + operator + "”未获资料支持")
+                          continue
+                      if record["values"]:
+                          raw_values = condition.get("value", "")
+                          candidate_values = raw_values if isinstance(raw_values, list) else [raw_values]
+                          invalid_values = [str(value) for value in candidate_values if str(value) not in record["values"]]
+                          if invalid_values:
+                              gaps.append(record["name"] + " 的值“" + "、".join(invalid_values) + "”不在已核验可选值中")
+                              continue
+                      time_window = str(condition.get("time_window") or "").strip()
+                      aggregation = str(condition.get("aggregation") or "").strip()
+                      if record["time_window_required"] and not time_window:
+                          gaps.append(record["name"] + " 缺少必填时间窗口")
+                          continue
+                      if record["aggregations"] and aggregation not in record["aggregations"]:
+                          gaps.append(record["name"] + " 的聚合方式“" + aggregation + "”未获资料支持")
+                          continue
+                      item = {
+                          "cf_id": cf_id,
+                          "name": record["name"],
+                          "path": record["path"],
+                          "status": record["status"],
+                          "source": record["source"],
+                          "configuration_guidance": record["configuration_guidance"],
+                          "missing_metadata": record["missing_metadata"],
+                          "logic": "OR" if str(condition.get("logic") or "AND").upper() == "OR" else "AND",
+                          "use": "exclude" if str(condition.get("use") or "include").lower() == "exclude" else "include",
+                          "operator": operator,
+                          "value": condition.get("value", ""),
+                          "time_window": time_window,
+                          "aggregation": aggregation,
+                          "reason": sanitize_claims(condition.get("reason"), safety_warnings, "条件选择原因"),
+                      }
+                      valid_conditions.append(item)
+                  include_signatures = set()
+                  exclude_signatures = set()
+                  for item in valid_conditions:
+                      signature = (
+                          item["cf_id"], item["operator"],
+                          json.dumps(item["value"], ensure_ascii=False, sort_keys=True),
+                          item["time_window"], item["aggregation"],
+                      )
+                      (exclude_signatures if item["use"] == "exclude" else include_signatures).add(signature)
+                  conflicts = include_signatures & exclude_signatures
+                  if conflicts:
+                      conflict_ids = sorted({signature[0] for signature in conflicts})
+                      gaps.append("同一人群的满足与排除条件冲突：" + "、".join(conflict_ids))
+                      valid_conditions = [item for item in valid_conditions if (
+                          item["cf_id"], item["operator"],
+                          json.dumps(item["value"], ensure_ascii=False, sort_keys=True),
+                          item["time_window"], item["aggregation"],
+                      ) not in conflicts]
+                  confirmed_count += sum(1 for item in valid_conditions if item["status"] == "CONFIRMED")
+                  pending_count += sum(1 for item in valid_conditions if item["status"] == "PENDING")
+                  if valid_conditions:
+                      normalized_audiences.append({
+                          "name": sanitize_claims(audience.get("name") or "人群方案", safety_warnings, "人群名称"),
+                          "positioning": sanitize_claims(audience.get("positioning"), safety_warnings, "人群定位"),
+                          "reason": sanitize_claims(audience.get("reason"), safety_warnings, "推荐理由"),
+                          "conditions": valid_conditions,
+                      })
+
+              sanitized_summary = sanitize_claims(plan.get("summary"), safety_warnings, "需求理解")
+              sanitized_notes = [sanitize_claims(item, safety_warnings, "业务注意事项") for item in plan.get("notes", [])[:10]] if isinstance(plan.get("notes"), list) else []
+
+              if not catalog or not strategy_allowed or not normalized_audiences:
+                  status = "UNSUPPORTED"
+              elif str(strategy_review_status or "").upper() != "APPROVED" or pending_count or gaps or safety_warnings:
+                  status = "NEEDS_CONFIRMATION"
+              else:
+                  status = "CONFIRMED_CONFIGURABLE"
+
+              versions = sorted({record["version"] for record in catalog.values() if record["version"]} | ({str(strategy_version)} if str(strategy_version or "").strip() else set()))
+              knowledge_version = ", ".join(versions)
+              normalized = {
+                  "summary": sanitized_summary,
+                  "audiences": normalized_audiences,
+                  "capability_gaps": sorted(set(gaps)),
+                  "notes": sanitized_notes,
+                  "safety_warnings": sorted(set(safety_warnings)),
+                  "status": status,
+                  "knowledge_version": knowledge_version,
+              }
+
+              lines = ["## 需求理解", md(normalized["summary"] or "已根据活动背景检索现有策略和标签资料。")]
+              if not catalog:
+                  lines.extend(["", "> 当前未召回可校验的 CF 标签记录，请检查标签知识库绑定及记录格式。"])
+              if not strategy_allowed:
+                  lines.extend(["", "> 当前未召回可校验的场景策略 CF 清单，请检查策略知识库绑定及召回结果。"])
+              if strategy_allowed and str(strategy_review_status or "").upper() != "APPROVED":
+                  lines.extend(["", "> 当前业务策略尚未完成审批，本轮结果只能作为“配置前请确认”的建议。"])
+              for index, audience in enumerate(normalized_audiences, 1):
+                  lines.extend(["", "## " + str(index) + ". " + md(audience["name"]), md(audience["positioning"])])
+                  if audience["reason"]:
+                      lines.append("- 推荐理由：" + md(audience["reason"]))
+                  lines.append("- CDP 配置条件：")
+                  for condition in audience["conditions"]:
+                      state_label = "已确认可配置" if condition["status"] == "CONFIRMED" else "配置前请确认"
+                      use_label = "排除" if condition["use"] == "exclude" else "满足"
+                      detail = condition["logic"] + "｜" + use_label + "｜" + md(condition["name"]) + "（" + md(condition["cf_id"]) + "）"
+                      detail += "｜" + md(condition["operator"]) + "｜" + display_value(condition["value"])
+                      lines.append("  - " + detail + "｜" + state_label)
+                      if condition["path"]:
+                          lines.append("    - 查找路径：" + md(condition["path"]))
+                      if condition["source"]:
+                          lines.append("    - 资料来源：" + md(condition["source"]))
+                      if condition["configuration_guidance"]:
+                          lines.append("    - 配置说明：" + md(condition["configuration_guidance"]))
+                      if condition["missing_metadata"]:
+                          lines.append("    - 缺少可确认元数据：" + "、".join(condition["missing_metadata"]))
+                      if condition["time_window"]:
+                          lines.append("    - 时间窗口：" + md(condition["time_window"]))
+                      if condition["aggregation"]:
+                          lines.append("    - 聚合方式：" + md(condition["aggregation"]))
+                      if condition["reason"]:
+                          lines.append("    - 选择原因：" + md(condition["reason"]))
+
+              if pending_count:
+                  lines.extend(["", "## 配置前请确认", "- 存在 " + str(pending_count) + " 个标签条件需要在当前 CDP 账号中核实后再配置。"])
+              if gaps:
+                  lines.extend(["", "## 标签能力缺口"])
+                  lines.extend("- " + md(item) for item in sorted(set(gaps)))
+              if normalized["notes"]:
+                  lines.extend(["", "## 业务注意事项"])
+                  lines.extend("- " + md(item) for item in normalized["notes"][:10])
+              if normalized["safety_warnings"]:
+                  lines.extend(["", "## 输出校验提醒"])
+                  lines.extend("- " + md(item) for item in normalized["safety_warnings"])
+              if knowledge_version:
+                  lines.extend(["", "- 标签知识版本：" + md(knowledge_version)])
+              lines.extend(["", "> 本结果未计算人数、未自动建群、未自动触达；请业务人员在 CDP 中逐项复核后人工配置。"])
+
+              normalized_json = json.dumps(normalized, ensure_ascii=False)
+              previous_object = load_plan(previous_plan)
+              previous_json = json.dumps(previous_object, ensure_ascii=False) if previous_object else "{}"
+              if status == "UNSUPPORTED":
+                  plan_to_save = "{}" if str(intent or "").upper() == "NEW_PLAN" else previous_json
+              else:
+                  plan_to_save = normalized_json
+
+              return {
+                  "status": status,
+                  "display_markdown": "\n".join(lines),
+                  "normalized_plan_json": normalized_json,
+                  "plan_to_save": plan_to_save,
+                  "knowledge_version": knowledge_version,
+                  "confirmed_count": confirmed_count,
+                  "pending_count": pending_count,
+              }
+        code_language: python3
+        desc: 只接受本轮标签召回中的 CF_ID，以知识记录状态为准，过滤越权条件并确定性生成 Markdown
+        outputs:
+          confirmed_count: {children: null, type: number}
+          display_markdown: {children: null, type: string}
+          knowledge_version: {children: null, type: string}
+          normalized_plan_json: {children: null, type: string}
+          plan_to_save: {children: null, type: string}
+          pending_count: {children: null, type: number}
+          status: {children: null, type: string}
+        selected: false
+        title: 校验CF白名单并生成Markdown
+        type: code
+        variables:
+        - value_selector: ['2000000000011', text]
+          value_type: string
+          variable: plan_text
+        - value_selector: ['2000000000010', result]
+          value_type: array[object]
+          variable: tag_hits
+        - value_selector: ['2000000000018', allowed_cf_ids]
+          value_type: string
+          variable: allowed_cf_ids
+        - value_selector: ['2000000000003', previous_plan]
+          value_type: string
+          variable: previous_plan
+        - value_selector: ['2000000000003', intent]
+          value_type: string
+          variable: intent
+        - value_selector: ['2000000000018', strategy_review_status]
+          value_type: string
+          variable: strategy_review_status
+        - value_selector: ['2000000000018', strategy_version]
+          value_type: string
+          variable: strategy_version
+      height: 96
+      id: '2000000000012'
+      position: {x: 1370, y: 300}
+      positionAbsolute: {x: 1370, y: 300}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        desc: 保存已校验方案、状态和知识版本，供下一轮修改使用
+        items:
+        - input_type: variable
+          operation: over-write
+          value: ['2000000000012', plan_to_save]
+          variable_selector: [conversation, last_plan]
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value: ['2000000000012', status]
+          variable_selector: [conversation, last_status]
+          write_mode: over-write
+        - input_type: variable
+          operation: over-write
+          value: ['2000000000012', knowledge_version]
+          variable_selector: [conversation, knowledge_version]
+          write_mode: over-write
+        selected: false
+        title: 保存已校验方案与状态
+        type: assigner
+        version: '2'
+      height: 110
+      id: '2000000000013'
+      position: {x: 1700, y: 300}
+      positionAbsolute: {x: 1700, y: 300}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: ready
+          conditions:
+          - comparison_operator: is
+            id: 8e2e04ca-401e-4573-92ac-61b90ea4477b
+            value: CONFIRMED_CONFIGURABLE
+            varType: string
+            variable_selector: ['2000000000012', status]
+          id: ready
+          logical_operator: and
+        - case_id: pending
+          conditions:
+          - comparison_operator: is
+            id: cdbebc66-a14e-434a-b47f-71501f5a75f4
+            value: NEEDS_CONFIRMATION
+            varType: string
+            variable_selector: ['2000000000012', status]
+          id: pending
+          logical_operator: and
+        desc: 根据确定性校验结果分为已确认、配置前确认和当前不支持
+        selected: false
+        title: 按三状态分流
+        type: if-else
+      height: 220
+      id: '2000000000014'
+      position: {x: 2030, y: 300}
+      positionAbsolute: {x: 2030, y: 300}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#2000000000012.display_markdown#}}'
+        desc: ''
+        selected: false
+        title: 回复：已确认可配置
+        type: answer
+        variables: []
+      height: 103
+      id: '2000000000015'
+      position: {x: 2360, y: 120}
+      positionAbsolute: {x: 2360, y: 120}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#2000000000012.display_markdown#}}'
+        desc: ''
+        selected: false
+        title: 回复：配置前请确认
+        type: answer
+        variables: []
+      height: 103
+      id: '2000000000016'
+      position: {x: 2360, y: 300}
+      positionAbsolute: {x: 2360, y: 300}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#2000000000012.display_markdown#}}'
+        desc: ''
+        selected: false
+        title: 回复：当前资料不支持
+        type: answer
+        variables: []
+      height: 103
+      id: '2000000000017'
+      position: {x: 2360, y: 480}
+      positionAbsolute: {x: 2360, y: 480}
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.55

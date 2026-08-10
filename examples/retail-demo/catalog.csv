@@ -1,0 +1,2 @@
+record_id,display_name,semantic_key,definition,resource_type,status,source_data_type,path,source,version,operators,values,time_window_required,aggregations
+CF-101,Demo lifecycle state,demo_lifecycle_state,Synthetic lifecycle state for CSV import demonstration,tag,NEEDS_CONFIRMATION,synthetic_demo,Demo CDP / Lifecycle / State,synthetic-csv-demo,demo-v1,equals|in,new|active|dormant,false,

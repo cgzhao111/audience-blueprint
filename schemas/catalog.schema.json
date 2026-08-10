@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/audience-blueprint/catalog.schema.json",
+  "title": "Audience Blueprint catalog",
+  "type": "object",
+  "required": ["records"],
+  "properties": {
+    "source_data_type": { "type": "string", "minLength": 1 },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "record_id",
+          "display_name",
+          "semantic_key",
+          "definition",
+          "resource_type",
+          "status"
+        ],
+        "properties": {
+          "record_id": { "type": "string", "pattern": "^CF-[0-9]{3}$" },
+          "display_name": { "type": "string", "minLength": 1 },
+          "semantic_key": { "type": "string", "minLength": 1 },
+          "definition": { "type": "string", "minLength": 1 },
+          "resource_type": {
+            "enum": ["tag", "attribute", "event", "event_property", "audience"]
+          },
+          "status": {
+            "enum": ["CONFIRMED_CONFIGURABLE", "NEEDS_CONFIRMATION", "UNSUPPORTED"]
+          },
+          "source_data_type": { "type": "string", "minLength": 1 },
+          "path": { "type": "string" },
+          "source": { "type": "string" },
+          "version": { "type": "string" },
+          "operators": { "type": "array", "items": { "type": "string" } },
+          "values": { "type": "array", "items": { "type": "string" } },
+          "time_window_required": { "type": "boolean" },
+          "aggregations": { "type": "array", "items": { "type": "string" } },
+          "mapping_note": { "type": "string" },
+          "configuration_guidance": { "type": "string" },
+          "usage_guidance": { "type": "string" }
+        },
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": { "status": { "const": "CONFIRMED_CONFIGURABLE" } },
+              "required": ["status"]
+            },
+            "then": {
+              "required": ["path", "source", "version", "operators"],
+              "properties": { "operators": { "minItems": 1 } }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "status": { "const": "CONFIRMED_CONFIGURABLE" },
+                "resource_type": { "enum": ["event", "event_property"] }
+              },
+              "required": ["status", "resource_type"]
+            },
+            "then": {
+              "required": ["time_window_required", "aggregations"],
+              "properties": { "aggregations": { "minItems": 1 } }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "additionalProperties": false
+}
