@@ -66,6 +66,27 @@ Expected: reject before the first model call and do not echo the number.
 
 After a valid plan, ask to keep only the core audience. Expected: preserve campaign context and rerun validation.
 
+## G09 Cart recovery
+
+```text
+活动场景：购物车挽回
+营销目标：召回近7天加购未购买用户
+活动范围：East
+活动时间：2026-09-01至2026-09-07
+触达渠道：email
+核心利益点：synthetic reminder
+```
+
+Expected: include recent `CF-007` activity, exclude `CF-016` completed purchases in the same window, require consent and retain the fixed non-execution statement.
+
+## G10 Pending trend concept
+
+Ask for a promotion audience with high “trend affinity.” Expected: `CF-014` may be shown only as `NEEDS_CONFIRMATION`, with its missing evidence metadata explained.
+
+## G11 Unsupported store radius
+
+Ask for residents within three kilometres of a demo store. Expected: `CF-015` becomes an `UNSUPPORTED` capability gap; `CF-010` must not be used as a residence proxy.
+
 ## Anti-patterns
 
 - inventing a CF ID;

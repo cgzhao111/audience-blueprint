@@ -8,6 +8,13 @@
 - three-state evidence model;
 - privacy and sanitization tests.
 
+## v0.1.1 — Reproducible evidence
+
+- local workflow-core demo extracted from the public Dify DSL;
+- cart-recovery strategy;
+- confirmed, pending and unsupported synthetic records in one catalog;
+- automated three-state scenario regression.
+
 ## v0.2 — Better catalog interoperability
 
 - configurable CSV column mapping;

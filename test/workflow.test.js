@@ -126,7 +126,7 @@ test("embedded workflow logic runs against the synthetic strategy and catalog", 
   assert.equal(selected.strategy_version, "audience-blueprint-demo-v1");
   assert.equal(
     selected.allowed_cf_ids,
-    "CF-001,CF-002,CF-006,CF-007,CF-009,CF-011,CF-012",
+    "CF-001,CF-002,CF-006,CF-007,CF-009,CF-011,CF-012,CF-013,CF-014,CF-017",
   );
 
   const catalogDocuments = await Promise.all(
@@ -165,6 +165,64 @@ test("embedded workflow logic runs against the synthetic strategy and catalog", 
   assert.match(confirmed.display_markdown, /Demo CDP \/ Profile \/ Customer region/);
   assert.match(confirmed.display_markdown, /synthetic-retail-demo\/catalog-v1/);
   assert.match(confirmed.display_markdown, /未计算人数、未自动建群、未自动触达/);
+
+  const pendingDocument = [{
+    content: await readFile(join(root, "knowledge", "tags", "CF-014.md"), "utf8"),
+  }];
+  const pendingCandidate = JSON.stringify({
+    summary: "Pending metadata must remain non-executable",
+    audiences: [{
+      name: "Trend lead",
+      conditions: [{
+        cf_id: "CF-014",
+        logic: "AND",
+        use: "include",
+        operator: "greater_than_or_equal",
+        value: 60,
+      }],
+    }],
+  });
+  const pending = runPython(
+    validator,
+    `print(json.dumps(main(${JSON.stringify(pendingCandidate)}, ${JSON.stringify(pendingDocument)}, ${JSON.stringify(selected.allowed_cf_ids)}, "{}", "NEW_PLAN", "APPROVED", ${JSON.stringify(selected.strategy_version)}), ensure_ascii=False))`,
+  );
+  assert.equal(pending.status, "NEEDS_CONFIRMATION");
+  assert.equal(pending.confirmed_count, 0);
+  assert.equal(pending.pending_count, 1);
+  assert.match(pending.display_markdown, /配置前请确认/);
+
+  const storeStrategy = await readFile(join(root, "knowledge", "strategy", "04-store-opening.md"), "utf8");
+  const storeSelected = runPython(
+    strategyParser,
+    `print(json.dumps(main(${JSON.stringify([
+      { content: commonStrategy },
+      { content: storeStrategy },
+    ])}, ${JSON.stringify(JSON.stringify({ scenario: "STORE_OPENING" }))}), ensure_ascii=False))`,
+  );
+  assert.match(storeSelected.allowed_cf_ids, /CF-015/);
+  const unsupportedDocument = [{
+    content: await readFile(join(root, "knowledge", "tags", "CF-015.md"), "utf8"),
+  }];
+  const unsupportedCandidate = JSON.stringify({
+    summary: "Unsupported radius must become a capability gap",
+    audiences: [{
+      name: "Invalid radius audience",
+      conditions: [{
+        cf_id: "CF-015",
+        logic: "AND",
+        use: "include",
+        operator: "within",
+        value: "3 km",
+      }],
+    }],
+  });
+  const unsupported = runPython(
+    validator,
+    `print(json.dumps(main(${JSON.stringify(unsupportedCandidate)}, ${JSON.stringify(unsupportedDocument)}, ${JSON.stringify(storeSelected.allowed_cf_ids)}, "{}", "NEW_PLAN", "APPROVED", ${JSON.stringify(storeSelected.strategy_version)}), ensure_ascii=False))`,
+  );
+  assert.equal(unsupported.status, "UNSUPPORTED");
+  assert.match(unsupported.display_markdown, /当前资料不支持/);
+  assert.match(unsupported.display_markdown, /Residence within store radius/);
 
   const invented = JSON.stringify({
     summary: "Invented field must not pass",

@@ -28,7 +28,7 @@ Never use `--force` against an output directory that contains hand-edited produc
 Create two independent knowledge bases:
 
 1. `Audience Blueprint - Strategies`
-   - upload the five files in `knowledge/strategy/`;
+   - upload the six files in `knowledge/strategy/`;
    - use title or parent-child chunking;
    - keep the scenario code and its “允许引用的标签” section in the same parent chunk.
 2. `Audience Blueprint - Catalog`
@@ -57,6 +57,8 @@ Use all cases in `evals/golden-cases.md`. A successful demo should:
 - reject common personal identifiers before the first LLM node;
 - display the fixed boundary statement;
 - preserve the previous valid plan when an unsupported modification is attempted.
+
+Before configuring Dify, run `npm run demo`. It executes the embedded deterministic strategy and validation code against the bundled synthetic cart-recovery case. Passing this command does not replace the Dify import and knowledge-retrieval checks above.
 
 ## 5. Production checklist
 

@@ -23,7 +23,7 @@ This checklist distinguishes a locally complete repository from a publicly maint
 - [ ] Create a public repository under an account that will actively maintain it.
 - [ ] Enable branch protection and require the CI workflow.
 - [ ] Add repository topics such as `dify`, `cdp`, `audience-segmentation` and `agent`.
-- [ ] Publish `v0.1.0` with a checksum for the npm package tarball or source archive.
+- [ ] Publish each release with a checksum for the npm package tarball or source archive.
 - [ ] Open roadmap issues instead of presenting planned features as implemented.
 - [ ] Add one `good first issue` backed by a clear acceptance test.
 
@@ -50,9 +50,11 @@ Do not state or imply that this project has been accepted until OpenAI confirms 
 
 ## Current repository state
 
-As shipped locally in `v0.1.0`:
+As prepared locally for `v0.1.1`:
 
-- the CLI and synthetic catalog tests run locally;
-- all embedded Python Code nodes compile and their core synthetic path executes locally;
+- the CLI validates 17 synthetic catalog records;
+- all embedded Python Code nodes compile and the cart-recovery workflow-core demo executes locally;
+- confirmed, pending, unsupported and invented-field paths have automated regression coverage;
 - repository sanitization tests run locally;
-- target Dify import, public GitHub CI, public adoption and program eligibility are not yet verified.
+- public `v0.1.0` CI and release artifacts exist;
+- target Dify knowledge binding, `v0.1.1` public CI, independent adoption and program eligibility are not yet verified.

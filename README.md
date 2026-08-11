@@ -10,7 +10,7 @@ The repository combines:
 - synthetic retail strategies and data;
 - regression tests for workflow structure, embedded Python code and private-data leakage.
 
-> Status: `v0.1.0` development preview. The included catalog is entirely synthetic. The workflow does not calculate audience size, create segments or send campaigns.
+> Status: `v0.1.1` release candidate. The included catalog is entirely synthetic. The workflow does not calculate audience size, create segments or send campaigns.
 
 ## Why this project exists
 
@@ -27,11 +27,12 @@ Audience Blueprint separates three responsibilities:
 
 ## Quick start
 
-Requirements: Node.js 20+ and a Dify workspace for the Chatflow demo.
+Requirements: Node.js 20+ and Python 3 for the embedded workflow-core demo. A Dify workspace is required only for the Chatflow UI.
 
 ```bash
 npm install
 npm run check
+npm run demo
 node ./bin/audience-blueprint.js validate ./examples/retail-demo/catalog.json
 node ./bin/audience-blueprint.js build ./examples/retail-demo/catalog.json --out ./knowledge/tags --force
 ```
@@ -42,7 +43,7 @@ JSON catalogs may declare a top-level `source_data_type` (the demo uses `synthet
 
 ## Run the Dify demo
 
-1. Create a strategy knowledge base and upload the five files in [`knowledge/strategy`](knowledge/strategy).
+1. Create a strategy knowledge base and upload the six files in [`knowledge/strategy`](knowledge/strategy).
 2. Create a catalog knowledge base and upload the generated files in [`knowledge/tags`](knowledge/tags).
 3. Import [`workflow/audience-blueprint-chatflow.yml`](workflow/audience-blueprint-chatflow.yml).
 4. Bind the two empty knowledge retrieval nodes.
@@ -50,6 +51,18 @@ JSON catalogs may declare a top-level `source_data_type` (the demo uses `synthet
 6. Run the cases in [`evals/golden-cases.md`](evals/golden-cases.md).
 
 Detailed instructions: [`docs/DIFY_SETUP.md`](docs/DIFY_SETUP.md).
+
+## Reproducible local demo
+
+`npm run demo` executes the same embedded strategy-selection and catalog-validation Python used by the Chatflow, without calling an LLM or a CDP. The bundled cart-recovery case must reach `CONFIRMED_CONFIGURABLE` with six evidence-backed conditions.
+
+The demo catalog now contains 17 synthetic records and five marketing scenarios. It deliberately includes:
+
+- a pending trend-affinity lead that must remain `NEEDS_CONFIRMATION`;
+- an unsupported residence-radius concept that must become a capability gap;
+- a cart-recovery strategy that includes recent cart activity and excludes completed purchases in the same window.
+
+See the captured output and verification boundary in [`docs/DEMO.md`](docs/DEMO.md). This proves the deterministic workflow core locally; it does not claim a particular Dify version, model provider or production CDP is compatible.
 
 ## Catalog states
 
@@ -93,7 +106,7 @@ test/                      CLI, workflow and sanitization tests
 
 ## Contributing
 
-Read [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`SECURITY.md`](SECURITY.md). New catalog adapters, deterministic rule checks, Dify compatibility tests and non-retail synthetic examples are especially welcome.
+Read [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`SECURITY.md`](SECURITY.md). New catalog adapters, deterministic rule checks, Dify compatibility tests and non-retail synthetic examples are especially welcome. First-time contributors can start with the scoped tasks in [`docs/CONTRIBUTOR_STARTER_ISSUES.md`](docs/CONTRIBUTOR_STARTER_ISSUES.md).
 
 Maintainers should also read [`docs/MAINTAINER_WORKFLOW.md`](docs/MAINTAINER_WORKFLOW.md) and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md). They separate locally verified behavior from public-release, Dify-runtime and adoption evidence.
 
