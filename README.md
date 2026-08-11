@@ -10,7 +10,7 @@ The repository combines:
 - synthetic retail strategies and data;
 - regression tests for workflow structure, embedded Python code and private-data leakage.
 
-> Status: `v0.1.1` release candidate. The included catalog is entirely synthetic. The workflow does not calculate audience size, create segments or send campaigns.
+> Status: `v0.1.1` public release. The included catalog is entirely synthetic. The workflow does not calculate audience size, create segments or send campaigns.
 
 ## Why this project exists
 

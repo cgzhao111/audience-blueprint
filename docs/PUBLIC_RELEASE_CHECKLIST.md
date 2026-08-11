@@ -50,11 +50,11 @@ Do not state or imply that this project has been accepted until OpenAI confirms 
 
 ## Current repository state
 
-As prepared locally for `v0.1.1`:
+Publicly verified for `v0.1.1`:
 
 - the CLI validates 17 synthetic catalog records;
 - all embedded Python Code nodes compile and the cart-recovery workflow-core demo executes locally;
 - confirmed, pending, unsupported and invented-field paths have automated regression coverage;
-- repository sanitization tests run locally;
-- public `v0.1.0` CI and release artifacts exist;
-- target Dify knowledge binding, `v0.1.1` public CI, independent adoption and program eligibility are not yet verified.
+- repository sanitization tests run in CI;
+- the `v0.1.1` tag, release package, SHA256 file and successful GitHub Actions run are public;
+- target Dify knowledge binding, independent adoption and program eligibility are not yet verified.
