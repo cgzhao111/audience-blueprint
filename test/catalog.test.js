@@ -23,14 +23,17 @@ test("JSON Schema and CLI expose the same record fields", async () => {
   assert.deepEqual(schemaFields, [...CATALOG_FIELDS].sort());
 });
 
-test("synthetic demo catalog is valid and contains twelve unique records", async () => {
+test("synthetic demo catalog is valid and contains seventeen unique records", async () => {
   const records = await loadCatalog(demoCatalog);
   const result = validateCatalog(records);
   assert.equal(result.valid, true, JSON.stringify(result.errors));
-  assert.equal(records.length, 12);
-  assert.equal(new Set(records.map((record) => record.record_id)).size, 12);
-  assert(records.every((record) => record.source.startsWith("synthetic-")));
+  assert.equal(records.length, 17);
+  assert.equal(new Set(records.map((record) => record.record_id)).size, 17);
+  assert(records.filter((record) => record.status === "CONFIRMED_CONFIGURABLE")
+    .every((record) => record.source.startsWith("synthetic-")));
   assert(records.every((record) => record.source_data_type === "synthetic_demo"));
+  assert.equal(records.find((record) => record.record_id === "CF-014")?.status, "NEEDS_CONFIRMATION");
+  assert.equal(records.find((record) => record.record_id === "CF-015")?.status, "UNSUPPORTED");
 });
 
 test("confirmed records require evidence metadata and event aggregations", () => {

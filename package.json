@@ -1,6 +1,6 @@
 {
   "name": "audience-blueprint",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Evidence-grounded audience segmentation copilot toolkit for Dify and CDP teams.",
   "type": "module",
   "bin": {
@@ -8,9 +8,10 @@
   },
   "scripts": {
     "build:demo": "node ./bin/audience-blueprint.js build ./examples/retail-demo/catalog.json --out ./knowledge/tags --force",
+    "demo": "node ./scripts/run-workflow-core-demo.mjs",
     "validate:demo": "node ./bin/audience-blueprint.js validate ./examples/retail-demo/catalog.json",
     "test": "node --test",
-    "check": "npm run validate:demo && npm test"
+    "check": "npm run validate:demo && npm run demo -- --check && npm test"
   },
   "engines": {
     "node": ">=20"

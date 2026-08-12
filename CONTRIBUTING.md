@@ -2,6 +2,8 @@
 
 Thank you for helping improve Audience Blueprint.
 
+If you are looking for a bounded first contribution, see [`docs/CONTRIBUTOR_STARTER_ISSUES.md`](docs/CONTRIBUTOR_STARTER_ISSUES.md).
+
 ## Before opening a pull request
 
 1. Open an issue for behavior changes or new catalog fields.
