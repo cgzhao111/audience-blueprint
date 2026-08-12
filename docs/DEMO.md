@@ -12,7 +12,7 @@ The command does not call an LLM, a CDP, or an external service. It loads the sy
 
 ## Expected evidence
 
-The current `v0.1.1` candidate produces:
+The current `v0.1.2` release produces:
 
 ```text
 # Audience Blueprint deterministic workflow-core demo
