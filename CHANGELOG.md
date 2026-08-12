@@ -12,7 +12,8 @@
 ### Changed
 
 - public sanitization regression uses irreversible signatures for known private names instead of embedding those names in source code;
-- contributor templates distinguish local checks, Dify runtime evidence and model-dependent observations.
+- contributor templates distinguish local checks, Dify runtime evidence and model-dependent observations;
+- GitHub Actions run on the current Node 24-based major versions, with weekly npm and workflow update checks.
 
 ## [0.1.1] - 2026-08-11
 
