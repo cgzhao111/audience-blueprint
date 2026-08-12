@@ -30,6 +30,8 @@ test("workflow is a provider-replaceable Dify advanced chat template", async () 
   const catalogNode = nodes.find((node) => node.data.title === "CDP标签配置知识检索（导入后绑定）");
   assert.deepEqual(strategyNode.data.query_variable_selector, ["2000000000003", "knowledge_query"]);
   assert.deepEqual(catalogNode.data.query_variable_selector, ["2000000000018", "tag_query"]);
+  assert.equal(catalogNode.data.multiple_retrieval_config.score_threshold, 0);
+  assert.equal(catalogNode.data.multiple_retrieval_config.top_k, 12);
 
   for (const marker of [
     "CONFIRMED_CONFIGURABLE",
@@ -128,6 +130,32 @@ test("embedded workflow logic runs against the synthetic strategy and catalog", 
     selected.allowed_cf_ids,
     "CF-001,CF-002,CF-006,CF-007,CF-009,CF-011,CF-012,CF-013,CF-014,CF-017",
   );
+
+  const normalizedPlainText = [
+    {
+      content: [
+        "场景代码：COMMON",
+        "审核状态：APPROVED",
+        "知识版本：audience-blueprint-demo-v1",
+        "允许引用的标签：CF-001, CF-011, CF-012, CF-013, CF-017",
+      ].join("\n"),
+    },
+    {
+      content: [
+        "场景代码：BRAND_PROMOTION",
+        "审核状态：APPROVED",
+        "知识版本：audience-blueprint-demo-v1",
+        "允许引用的标签：CF-001, CF-002, CF-006, CF-007, CF-009, CF-011, CF-012, CF-013, CF-014, CF-017",
+      ].join("\n"),
+    },
+  ];
+  const normalizedSelected = runPython(
+    strategyParser,
+    `print(json.dumps(main(${JSON.stringify(normalizedPlainText)}, ${JSON.stringify(JSON.stringify({ scenario: "BRAND_PROMOTION" }))}), ensure_ascii=False))`,
+  );
+  assert.equal(normalizedSelected.strategy_status, "READY");
+  assert.equal(normalizedSelected.strategy_review_status, "APPROVED");
+  assert.equal(normalizedSelected.allowed_cf_ids, selected.allowed_cf_ids);
 
   const catalogDocuments = await Promise.all(
     ["CF-001.md", "CF-011.md", "CF-012.md"].map(async (name) => ({

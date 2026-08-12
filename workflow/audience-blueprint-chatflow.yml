@@ -817,7 +817,13 @@ workflow:
 
           def allowed_section(text):
               match = re.search(r"(?is)##\s*允许引用的标签\s*(.*?)(?=\n##\s|\Z)", text)
-              return match.group(1).strip() if match else ""
+              if match:
+                  return match.group(1).strip()
+              # Dify may normalize a Markdown strategy document into a plain-text
+              # retrieval chunk. Keep the machine-readable allowlist on one line
+              # so the parser remains evidence-bound without hard-coded CF IDs.
+              plain = re.search(r"(?im)^\s*允许引用的标签\s*[:：]\s*(.+?)\s*$", text)
+              return plain.group(1).strip() if plain else ""
 
           def extract_cf_ids(text):
               ids = set(re.findall(r"\bCF-\d{3}\b", text.upper()))
@@ -944,7 +950,7 @@ workflow:
           reranking_model:
             model: ''
             provider: ''
-          score_threshold: 0.45
+          score_threshold: 0.0
           top_k: 12
         query_variable_selector: ['2000000000018', tag_query]
         retrieval_mode: multiple
