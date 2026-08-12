@@ -1,6 +1,6 @@
 {
   "name": "audience-blueprint",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Evidence-grounded audience segmentation copilot toolkit for Dify and CDP teams.",
   "type": "module",
   "bin": {
