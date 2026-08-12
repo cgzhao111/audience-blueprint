@@ -1,5 +1,9 @@
 # Audience Blueprint
 
+[![CI](https://github.com/cgzhao111/audience-blueprint/actions/workflows/ci.yml/badge.svg)](https://github.com/cgzhao111/audience-blueprint/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/cgzhao111/audience-blueprint)](https://github.com/cgzhao111/audience-blueprint/releases)
+[![License](https://img.shields.io/github/license/cgzhao111/audience-blueprint)](LICENSE)
+
 Audience Blueprint is an evidence-grounded audience segmentation copilot toolkit for Dify and CDP teams. It turns a marketing brief into a reviewable audience configuration plan while refusing to invent fields that are absent from the supplied catalog.
 
 The repository combines:
@@ -33,6 +37,7 @@ Requirements: Node.js 20+ and Python 3 for the embedded workflow-core demo. A Di
 npm install
 npm run check
 npm run demo
+npm run demo:cases
 node ./bin/audience-blueprint.js validate ./examples/retail-demo/catalog.json
 node ./bin/audience-blueprint.js build ./examples/retail-demo/catalog.json --out ./knowledge/tags --force
 ```
@@ -64,6 +69,8 @@ The demo catalog now contains 17 synthetic records and five marketing scenarios.
 
 See the captured output and verification boundary in [`docs/DEMO.md`](docs/DEMO.md). This proves the deterministic workflow core locally; it does not claim a particular Dify version, model provider or production CDP is compatible.
 
+For broader evidence, `npm run demo:cases` executes six synthetic cases against the same embedded workflow-core code: four confirmed plans, one pending metadata lead and one unsupported capability. The machine-readable fixtures live in [`examples/retail-demo/cases.json`](examples/retail-demo/cases.json), while the step-by-step Dify Preview exercises live in [`docs/case-studies`](docs/case-studies/README.md).
+
 ## Catalog states
 
 | State | Meaning | Workflow behavior |
@@ -86,6 +93,7 @@ knowledge/tags/            generated Dify catalog documents
 workflow/                  provider-replaceable Dify Chatflow template
 evals/                     golden cases and anti-patterns
 docs/                      architecture and deployment guidance
+docs/case-studies/         reproducible Dify Preview exercises
 test/                      CLI, workflow and sanitization tests
 ```
 
@@ -107,6 +115,8 @@ test/                      CLI, workflow and sanitization tests
 ## Contributing
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`SECURITY.md`](SECURITY.md). New catalog adapters, deterministic rule checks, Dify compatibility tests and non-retail synthetic examples are especially welcome. First-time contributors can start with the scoped tasks in [`docs/CONTRIBUTOR_STARTER_ISSUES.md`](docs/CONTRIBUTOR_STARTER_ISSUES.md).
+
+If you test the workflow, use the dedicated Dify compatibility or use-case issue form. [`docs/ADOPTION.md`](docs/ADOPTION.md) explains how to report successful, partial and failed results without exposing private metadata or inflating adoption claims.
 
 Maintainers should also read [`docs/MAINTAINER_WORKFLOW.md`](docs/MAINTAINER_WORKFLOW.md) and [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md). They separate locally verified behavior from public-release, Dify-runtime and adoption evidence.
 

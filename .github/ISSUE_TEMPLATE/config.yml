@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/cgzhao111/audience-blueprint/security/policy
+    about: Report security-sensitive findings through the repository security policy, not a public issue.
+  - name: Adoption and privacy guidance
+    url: https://github.com/cgzhao111/audience-blueprint/blob/main/docs/ADOPTION.md
+    about: Review evidence levels, optional identity fields, and data that must not be shared.

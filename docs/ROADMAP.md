@@ -15,6 +15,14 @@
 - confirmed, pending and unsupported synthetic records in one catalog;
 - automated three-state scenario regression.
 
+## v0.1.2 — Public evaluation pack
+
+- deterministic six-case suite covering four confirmed, one pending and one unsupported result;
+- step-by-step case studies for Dify Preview evaluation;
+- Dify compatibility and use-case feedback issue forms;
+- explicit adoption evidence levels and anti-inflation guidance;
+- irreversible private-identifier regression signatures instead of publishing blocked names.
+
 ## v0.2 — Better catalog interoperability
 
 - configurable CSV column mapping;

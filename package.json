@@ -9,9 +9,11 @@
   "scripts": {
     "build:demo": "node ./bin/audience-blueprint.js build ./examples/retail-demo/catalog.json --out ./knowledge/tags --force",
     "demo": "node ./scripts/run-workflow-core-demo.mjs",
+    "demo:cases": "node ./scripts/run-case-suite.mjs",
+    "validate:cases": "node ./scripts/run-case-suite.mjs --check",
     "validate:demo": "node ./bin/audience-blueprint.js validate ./examples/retail-demo/catalog.json",
     "test": "node --test",
-    "check": "npm run validate:demo && npm run demo -- --check && npm test"
+    "check": "npm run validate:demo && npm run demo -- --check && npm run validate:cases && npm test"
   },
   "engines": {
     "node": ">=20"
@@ -30,6 +32,7 @@
     "src/",
     "schemas/",
     "workflow/",
+    "scripts/",
     "knowledge/",
     "examples/",
     "evals/",

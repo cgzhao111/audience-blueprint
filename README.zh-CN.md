@@ -1,5 +1,9 @@
 # Audience Blueprint
 
+[![CI](https://github.com/cgzhao111/audience-blueprint/actions/workflows/ci.yml/badge.svg)](https://github.com/cgzhao111/audience-blueprint/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/cgzhao111/audience-blueprint)](https://github.com/cgzhao111/audience-blueprint/releases)
+[![License](https://img.shields.io/github/license/cgzhao111/audience-blueprint)](LICENSE)
+
 Audience Blueprint 是一个面向 Dify 与 CDP 团队的“证据约束型营销人群配置顾问”开源工具。它把营销需求转换为可人工复核的人群规则，同时拒绝使用标签目录中不存在的字段。
 
 项目包含：
@@ -33,6 +37,7 @@ Audience Blueprint 将能力拆成三层：
 npm install
 npm run check
 npm run demo
+npm run demo:cases
 node ./bin/audience-blueprint.js validate ./examples/retail-demo/catalog.json
 node ./bin/audience-blueprint.js build ./examples/retail-demo/catalog.json --out ./knowledge/tags --force
 ```
@@ -64,6 +69,8 @@ JSON 目录可以通过顶层 `source_data_type` 声明数据类型（演示值�
 
 实际输出与验证边界见 [`docs/DEMO.md`](docs/DEMO.md)。这只能证明确定性工作流核心已在本地运行，不能据此声称某个 Dify 版本、模型供应商或生产 CDP 已兼容。
 
+如需更完整的可复现证据，运行 `npm run demo:cases`。该命令使用同一套内嵌工作流核心执行 6 个合成案例：4 个已确认方案、1 个待确认标签线索和 1 个不支持能力。机器可读用例位于 [`examples/retail-demo/cases.json`](examples/retail-demo/cases.json)，Dify Preview 的逐步案例位于 [`docs/case-studies`](docs/case-studies/README.md)。
+
 ## 目录状态
 
 | 状态 | 含义 | 输出行为 |
@@ -92,6 +99,8 @@ JSON 目录可以通过顶层 `source_data_type` 声明数据类型（演示值�
 ## 参与贡献
 
 请阅读 [`CONTRIBUTING.md`](CONTRIBUTING.md) 和 [`SECURITY.md`](SECURITY.md)。欢迎贡献新的目录适配器、确定性规则检查、Dify兼容性测试和其他行业的合成示例。首次参与者可以从 [`docs/CONTRIBUTOR_STARTER_ISSUES.md`](docs/CONTRIBUTOR_STARTER_ISSUES.md) 中已经限定范围的任务开始。
+
+如果你实际测试了工作流，请使用专用的 Dify 兼容性或案例反馈 Issue 表单。[`docs/ADOPTION.md`](docs/ADOPTION.md) 说明如何在不暴露私有元数据、不夸大采用情况的前提下报告成功、部分成功和失败结果。
 
 维护者还应阅读 [`docs/MAINTAINER_WORKFLOW.md`](docs/MAINTAINER_WORKFLOW.md) 与 [`docs/PUBLIC_RELEASE_CHECKLIST.md`](docs/PUBLIC_RELEASE_CHECKLIST.md)。两份文档将本地验证、公开发布、Dify 实机兼容和真实采用证据明确分开。
 

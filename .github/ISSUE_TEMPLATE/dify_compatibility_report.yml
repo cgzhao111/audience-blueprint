@@ -1,0 +1,127 @@
+name: Dify compatibility report
+description: Record a sanitized import and test result for a specific Dify environment.
+title: "[Dify compatibility]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for testing Audience Blueprint in Dify. Successful and failed results are both useful.
+
+        Do not include API keys, knowledge IDs, private URLs, workspace IDs, customer metadata, user-level records, or unredacted screenshots. Use the bundled synthetic catalog and strategies whenever possible.
+
+  - type: input
+    id: project_version
+    attributes:
+      label: Audience Blueprint version or commit
+      placeholder: "v0.1.1 or a full commit SHA"
+    validations:
+      required: true
+
+  - type: input
+    id: dify_version
+    attributes:
+      label: Dify version
+      description: Use the exact version shown by your deployment, not "latest".
+      placeholder: "For example: 1.x.y"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Deployment type
+      options:
+        - Dify Cloud
+        - Self-hosted with Docker Compose
+        - Self-hosted with Kubernetes
+        - Other self-hosted deployment
+        - Unknown
+    validations:
+      required: true
+
+  - type: input
+    id: model_provider
+    attributes:
+      label: Model provider and model
+      description: Optional. Name only the provider/model; never paste credentials or endpoint URLs.
+      placeholder: "For example: OpenAI / gpt-4.1-mini"
+
+  - type: dropdown
+    id: import_result
+    attributes:
+      label: Workflow import result
+      options:
+        - Imported without changes
+        - Imported after changing the model provider or model
+        - Imported after another documented change
+        - Import failed
+    validations:
+      required: true
+
+  - type: dropdown
+    id: knowledge_binding
+    attributes:
+      label: Synthetic knowledge-base binding
+      options:
+        - Both knowledge bases bound and retrieved records
+        - Both knowledge bases bound but retrieval was incomplete
+        - Knowledge bases could not be bound
+        - Not tested
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: cases
+    attributes:
+      label: Published cases executed
+      description: Select only cases you actually ran. Leaving every item clear is valid for an import-only report.
+      options:
+        - label: Missing-information clarification
+        - label: Brand promotion
+        - label: Dormant-member recall
+        - label: Registered-without-purchase conversion
+        - label: Store opening
+        - label: Cart recovery
+        - label: Pending metadata remains NEEDS_CONFIRMATION
+        - label: Unsupported field remains UNSUPPORTED
+        - label: Invented field is rejected
+        - label: Personal identifier is rejected before the first model node
+
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed result
+      description: Separate import, retrieval, deterministic validation, and model-dependent wording.
+      placeholder: |
+        Import:
+        Knowledge retrieval:
+        Three-state validation:
+        Conversation output:
+    validations:
+      required: true
+
+  - type: textarea
+    id: changes
+    attributes:
+      label: Changes required
+      description: List any provider replacement, node migration, or other adjustment. Write "None" if unchanged.
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Optional public log excerpt, screenshot, video, or reproduction repository. Redact all identifiers and secrets first.
+
+  - type: checkboxes
+    id: declaration
+    attributes:
+      label: Safety and accuracy declaration
+      options:
+        - label: I tested the version and environment stated above; this is not an estimated or copied result.
+          required: true
+        - label: I removed credentials, private URLs, workspace/knowledge IDs, customer metadata, and user-level records.
+          required: true
+        - label: I understand that a successful import does not by itself prove every model, provider, retrieval setup, or production CDP is compatible.
+          required: true

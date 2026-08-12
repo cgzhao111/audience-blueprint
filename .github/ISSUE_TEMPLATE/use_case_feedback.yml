@@ -1,0 +1,109 @@
+name: Use-case feedback
+description: Share a tested marketing scenario, including limitations and evidence state.
+title: "[Use case]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for a scenario you actually tried. A failed or partially useful result is as valuable as a successful one.
+
+        Keep the example synthetic, public-domain, or explicitly licensed. Do not publish customer briefs, real catalog exports, member records, order details, credentials, private URLs, or internal screenshots.
+
+  - type: input
+    id: version
+    attributes:
+      label: Audience Blueprint version or commit
+      placeholder: "v0.1.1 or a full commit SHA"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scenario_type
+    attributes:
+      label: Scenario
+      options:
+        - Brand promotion
+        - Dormant-member recall
+        - Registered-without-purchase conversion
+        - Store opening
+        - Cart recovery
+        - New synthetic scenario
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: synthetic_brief
+    attributes:
+      label: Sanitized or synthetic marketing brief
+      description: Include the goal, audience, region, time window, channel, and exclusions that mattered.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Overall outcome
+      options:
+        - Useful without rule changes
+        - Useful after manual rule changes
+        - Partially useful
+        - Not useful for this scenario
+        - Could not complete the test
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: states
+    attributes:
+      label: Evidence states observed
+      options:
+        - label: CONFIRMED_CONFIGURABLE
+        - label: NEEDS_CONFIRMATION
+        - label: UNSUPPORTED
+
+  - type: textarea
+    id: useful
+    attributes:
+      label: What was useful?
+      description: Describe specific behavior rather than giving only a score.
+    validations:
+      required: true
+
+  - type: textarea
+    id: gaps
+    attributes:
+      label: What was missing, confusing, or incorrect?
+      description: Include unsafe substitutions, retrieval misses, AND/OR problems, or unclear review steps. Write "None observed" if applicable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: manual_changes
+    attributes:
+      label: Manual changes made
+      description: Optional. Do not paste proprietary field names or production metadata.
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Reproduction or sanitized evidence
+      description: Optional link, redacted screenshot, or minimal synthetic fixture.
+
+  - type: input
+    id: organization
+    attributes:
+      label: Organization or team
+      description: Optional. Leave blank if you do not want this information published.
+
+  - type: checkboxes
+    id: declaration
+    attributes:
+      label: Data and reporting declaration
+      options:
+        - label: This report describes a test I actually performed.
+          required: true
+        - label: The submitted brief and evidence are synthetic, public-domain, or explicitly licensed for public sharing.
+          required: true
+        - label: I removed credentials, private URLs, organization-owned catalog metadata, and user-level records.
+          required: true
