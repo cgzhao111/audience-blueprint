@@ -1,0 +1,162 @@
+{
+  "version": "demo-case-suite-v1",
+  "source_data_type": "synthetic_demo",
+  "cases": [
+    {
+      "id": "promotion-confirmed",
+      "title": "Promotion with evidence-backed category intent",
+      "scenario": "BRAND_PROMOTION",
+      "strategy_file": "01-promotion.md",
+      "expected_status": "CONFIRMED_CONFIGURABLE",
+      "expected_cf_ids": ["CF-001", "CF-007", "CF-009", "CF-011", "CF-012", "CF-017"],
+      "candidate": {
+        "summary": "Synthetic promotion for customers in the East region with recent Running-category intent.",
+        "audiences": [
+          {
+            "name": "Promotion core audience",
+            "positioning": "Demo customers with explicit category preference and a recent cart event.",
+            "reason": "Combines declared scope, recent behavior and mandatory governance conditions.",
+            "conditions": [
+              { "cf_id": "CF-001", "logic": "AND", "use": "include", "operator": "equals", "value": "East" },
+              { "cf_id": "CF-007", "logic": "AND", "use": "include", "operator": "occurred", "value": 1, "time_window": "last 14 days", "aggregation": "total_count" },
+              { "cf_id": "CF-009", "logic": "AND", "use": "include", "operator": "equals", "value": "Running" },
+              { "cf_id": "CF-011", "logic": "AND", "use": "include", "operator": "equals", "value": "granted" },
+              { "cf_id": "CF-012", "logic": "AND", "use": "exclude", "operator": "in", "value": ["fraud", "employee", "opt_out"] },
+              { "cf_id": "CF-017", "logic": "AND", "use": "exclude", "operator": "occurred", "value": 3, "time_window": "last 7 days", "aggregation": "total_count" }
+            ]
+          }
+        ],
+        "capability_gaps": [],
+        "notes": ["Synthetic metadata only; replace the catalog before deployment."]
+      }
+    },
+    {
+      "id": "dormant-recall-confirmed",
+      "title": "Dormant-customer recall with historical value bands",
+      "scenario": "DORMANT_RECALL",
+      "strategy_file": "02-dormant-recall.md",
+      "expected_status": "CONFIRMED_CONFIGURABLE",
+      "expected_cf_ids": ["CF-001", "CF-003", "CF-004", "CF-011", "CF-012"],
+      "candidate": {
+        "summary": "Synthetic recall plan for East-region customers whose last purchase was 120 to 365 days ago.",
+        "audiences": [
+          {
+            "name": "Dormant recall core audience",
+            "positioning": "Demo customers with a documented prior purchase who are now outside the active window.",
+            "reason": "Uses recency and purchase-count metadata without inferring income or purchasing power.",
+            "conditions": [
+              { "cf_id": "CF-001", "logic": "AND", "use": "include", "operator": "equals", "value": "East" },
+              { "cf_id": "CF-003", "logic": "AND", "use": "include", "operator": "between", "value": [120, 365] },
+              { "cf_id": "CF-004", "logic": "AND", "use": "include", "operator": "greater_than_or_equal", "value": 1 },
+              { "cf_id": "CF-011", "logic": "AND", "use": "include", "operator": "equals", "value": "granted" },
+              { "cf_id": "CF-012", "logic": "AND", "use": "exclude", "operator": "in", "value": ["fraud", "employee", "opt_out"] }
+            ]
+          }
+        ],
+        "capability_gaps": [],
+        "notes": ["Historical purchase metadata is not an income estimate."]
+      }
+    },
+    {
+      "id": "store-opening-confirmed",
+      "title": "Store opening using an explicit store relation",
+      "scenario": "STORE_OPENING",
+      "strategy_file": "04-store-opening.md",
+      "expected_status": "CONFIRMED_CONFIGURABLE",
+      "expected_cf_ids": ["CF-006", "CF-010", "CF-011", "CF-012", "CF-017"],
+      "candidate": {
+        "summary": "Synthetic opening plan for customers assigned to Store-A with recent product-view activity.",
+        "audiences": [
+          {
+            "name": "Store opening core audience",
+            "positioning": "Demo customers linked to a listed store and showing recent product interest.",
+            "reason": "Uses the explicit synthetic store relation and does not infer residence or distance.",
+            "conditions": [
+              { "cf_id": "CF-010", "logic": "AND", "use": "include", "operator": "equals", "value": "Store-A" },
+              { "cf_id": "CF-006", "logic": "AND", "use": "include", "operator": "occurred", "value": 1, "time_window": "last 30 days", "aggregation": "total_count" },
+              { "cf_id": "CF-011", "logic": "AND", "use": "include", "operator": "equals", "value": "granted" },
+              { "cf_id": "CF-012", "logic": "AND", "use": "exclude", "operator": "in", "value": ["fraud", "employee", "opt_out"] },
+              { "cf_id": "CF-017", "logic": "AND", "use": "exclude", "operator": "occurred", "value": 3, "time_window": "last 7 days", "aggregation": "total_count" }
+            ]
+          }
+        ],
+        "capability_gaps": [],
+        "notes": ["Nearest-store assignment is not proof of residence or precise distance."]
+      }
+    },
+    {
+      "id": "cart-recovery-confirmed",
+      "title": "Cart recovery with completed-purchase exclusion",
+      "scenario": "CART_RECOVERY",
+      "strategy_file": "05-cart-recovery.md",
+      "expected_status": "CONFIRMED_CONFIGURABLE",
+      "expected_cf_ids": ["CF-001", "CF-007", "CF-011", "CF-012", "CF-016", "CF-017"],
+      "candidate": {
+        "summary": "Synthetic cart-recovery demonstration with governance exclusions.",
+        "audiences": [
+          {
+            "name": "Cart recovery core audience",
+            "positioning": "Demo customers with a recent cart event and no completed purchase in the same window.",
+            "reason": "Intersects strategy and catalog evidence before displaying rules.",
+            "conditions": [
+              { "cf_id": "CF-001", "logic": "AND", "use": "include", "operator": "equals", "value": "East" },
+              { "cf_id": "CF-007", "logic": "AND", "use": "include", "operator": "occurred", "value": 1, "time_window": "last 7 days", "aggregation": "total_count" },
+              { "cf_id": "CF-016", "logic": "AND", "use": "exclude", "operator": "occurred", "value": 1, "time_window": "last 7 days", "aggregation": "total_count" },
+              { "cf_id": "CF-011", "logic": "AND", "use": "include", "operator": "equals", "value": "granted" },
+              { "cf_id": "CF-012", "logic": "AND", "use": "exclude", "operator": "in", "value": ["fraud", "employee", "opt_out"] },
+              { "cf_id": "CF-017", "logic": "AND", "use": "exclude", "operator": "occurred", "value": 3, "time_window": "last 7 days", "aggregation": "total_count" }
+            ]
+          }
+        ],
+        "capability_gaps": [],
+        "notes": ["No audience count, segment creation or outreach is performed."]
+      }
+    },
+    {
+      "id": "trend-affinity-pending",
+      "title": "Unverified trend-affinity lead remains pending",
+      "scenario": "BRAND_PROMOTION",
+      "strategy_file": "01-promotion.md",
+      "expected_status": "NEEDS_CONFIRMATION",
+      "expected_cf_ids": ["CF-014"],
+      "candidate": {
+        "summary": "Synthetic request that asks for an unverified trend-affinity concept.",
+        "audiences": [
+          {
+            "name": "Trend-affinity candidate audience",
+            "positioning": "A non-executable lead that requires model-owner and metadata review.",
+            "reason": "Demonstrates that incomplete catalog evidence cannot be promoted to an executable condition.",
+            "conditions": [
+              { "cf_id": "CF-014", "logic": "AND", "use": "include", "operator": "greater_than_or_equal", "value": 80 }
+            ]
+          }
+        ],
+        "capability_gaps": [],
+        "notes": ["Confirm score range, refresh cadence, owner, source and version before use."]
+      }
+    },
+    {
+      "id": "store-radius-unsupported",
+      "title": "Unsupported residence radius is reported as a gap",
+      "scenario": "STORE_OPENING",
+      "strategy_file": "04-store-opening.md",
+      "expected_status": "UNSUPPORTED",
+      "expected_cf_ids": [],
+      "candidate": {
+        "summary": "Synthetic request for residents within three kilometres of Store-A.",
+        "audiences": [
+          {
+            "name": "Store-radius request",
+            "positioning": "A deliberately unsupported audience concept.",
+            "reason": "Proves that nearest-store metadata is not used as a residence proxy.",
+            "conditions": [
+              { "cf_id": "CF-015", "logic": "AND", "use": "include", "operator": "equals", "value": "Store-A within 3km" }
+            ]
+          }
+        ],
+        "capability_gaps": ["The supplied catalog has no verified residence-radius capability."],
+        "notes": ["Ask the CDP owner whether an authorized location field exists."]
+      }
+    }
+  ]
+}

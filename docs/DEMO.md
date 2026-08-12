@@ -5,6 +5,7 @@ The repository includes a deterministic demo that runs the strategy-selection an
 ```bash
 npm install
 npm run demo
+npm run demo:cases
 ```
 
 The command does not call an LLM, a CDP, or an external service. It loads the synthetic common and cart-recovery strategies, resolves their CF-ID whitelist, loads only the matching generated catalog documents, and validates a candidate audience plan.
@@ -53,3 +54,13 @@ Automated regression cases also verify that:
 - Any audience was counted, created or contacted.
 
 Record Dify-specific evidence separately using [`PUBLIC_RELEASE_CHECKLIST.md`](PUBLIC_RELEASE_CHECKLIST.md).
+
+## Multi-case suite
+
+`npm run demo:cases` runs six machine-readable fixtures from [`examples/retail-demo/cases.json`](../examples/retail-demo/cases.json). The suite asserts both the final state and the exact CF-ID set that survives validation:
+
+- brand promotion, dormant recall, store opening and cart recovery reach `CONFIRMED_CONFIGURABLE`;
+- an incomplete trend-affinity record remains `NEEDS_CONFIRMATION`;
+- an unsupported store-residence radius produces `UNSUPPORTED` without substituting nearest-store metadata.
+
+Use `npm run demo:cases -- --json` for machine-readable evidence or `npm run demo:cases -- --case=promotion-confirmed` for one fixture. Dify Preview instructions and expected outputs are documented in [`case-studies`](case-studies/README.md).

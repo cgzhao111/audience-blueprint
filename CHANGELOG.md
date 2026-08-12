@@ -1,5 +1,19 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- deterministic six-case workflow-core suite with exact state and evidence-ID assertions;
+- four step-by-step synthetic case studies for Dify Preview evaluation;
+- Dify compatibility and use-case feedback forms;
+- adoption evidence definitions and privacy-preserving reporting guidance.
+
+### Changed
+
+- public sanitization regression uses irreversible signatures for known private names instead of embedding those names in source code;
+- contributor templates distinguish local checks, Dify runtime evidence and model-dependent observations.
+
 ## [0.1.1] - 2026-08-11
 
 ### Added
